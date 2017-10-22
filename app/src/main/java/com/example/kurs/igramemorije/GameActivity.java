@@ -14,6 +14,7 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -63,12 +64,20 @@ public class GameActivity extends AppCompatActivity {
             final GridLayout glMreza = (GridLayout) findViewById(R.id.glMreza);
             glMreza.setColumnCount(w);
 
+            final TextView tvtime = (TextView)findViewById(R.id.tvTime);
             time=0;
             Timer t = new Timer();
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     time++;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvtime.setText(time+"s");
+                        }
+                    });
+
                 }
             },1000,1000);
             rlRoot.post(new Runnable() {
