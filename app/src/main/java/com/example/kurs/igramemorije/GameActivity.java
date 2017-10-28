@@ -30,6 +30,7 @@ public class GameActivity extends AppCompatActivity {
         ImageButton secondOpened;
         int numOfOpened;
         int time;
+    Timer timer;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +67,8 @@ public class GameActivity extends AppCompatActivity {
 
             final TextView tvtime = (TextView)findViewById(R.id.tvTime);
             time=0;
-            Timer t = new Timer();
-            t.schedule(new TimerTask() {
+         timer= new Timer();
+            timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     time++;
@@ -138,6 +139,15 @@ public class GameActivity extends AppCompatActivity {
                                         numOfOpened = 0;
                                         firstOpened.setClickable(false);
                                         secondOpened.setClickable(false);
+                                        if(++solved==h*w/2)
+                                        {
+                                            timer.cancel();
+                                            finish();
+                                            Intent intent = new Intent(getApplicationContext(), GameOverActivity.class);
+
+                                            intent.putExtra("time", time);
+                                            startActivity(intent);
+                                        }
                                     }
                                 }
                                 else
